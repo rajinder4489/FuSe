@@ -1,0 +1,19 @@
+#Scoring scheme 1 for finding the confidence of protein pairs; optimal
+
+>BLAST	=>	30	-5	-1	"(identity, coverage, gaps)"
+
+Tool	STONM	STNM	STM	NM	NP
+>CDD	5	2.5	1	-2.5	0.5
+>Coils	5	2.5	1	-2.5	0.5
+>Gene3D	5	2.5	1	-2.5	0.5
+>Hamap	5	2.5	1	-2.5	0.5
+>MobiDBLite	5	2.5	1	-2.5	0.5
+>Pfam	5	2.5	1	-2.5	0.5
+>PIRSF	5	2.5	1	-2.5	0.5
+>PRINTS	5	2.5	1	-2.5	0.5
+>ProSitePatterns	5	2.5	1	-2.5	0.5
+>ProSiteProfiles	5	2.5	1	-2.5	0.5
+>SFLD	5	2.5	1	-2.5	0.5
+>SMART	5	2.5	1	-2.5	0.5
+>SUPERFAMILY	5	2.5	1	-2.5	0.5
+>TIGRFAM	5	2.5	1	-2.5	0.5
