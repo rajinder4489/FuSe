@@ -3,7 +3,7 @@ Functional grouping of transcripts for RNA-Seq analyses
 
 On Linux machine, First run the following commands 
 
-cat bi_do.part0* > ~/bi_do.rar
+*cat bi_do.part0\* > ~/bi_do.rar
 
 unrar e bi_do.ra
 
