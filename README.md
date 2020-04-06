@@ -3,12 +3,11 @@
 
 After cloning the repository, first run the following commands
 
-On Linux machine
-  *cat bi_do.part0\* > ~/bi_do.rar*
-  *unrar e bi_do.ra*
+On Linux machine, 
+```cat bi_do.part0\* > ~/bi_do.rar```
+ ```unrar e bi_do.ra```
 
-On Windows, unrar using Winrar
-Click on any .rar file  (bi_do.part0*) and click extract here
+On Windows, unrar using Winrar. Click on any .rar file  (bi_do.part0*) and click extract here
 
 
 0.	**Environment setup**: FuSe requires Perl (v5.26.1 or higher) and certain Perl modules. When using FuSe for the first time, install the Perl modules by running the following command from command prompt.
@@ -19,7 +18,7 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 
 
 
-1.	**Protein pairs**: All the protein pair combinations are created and both confidence scores (KS and DS) are calculated for them. If you have used the Ensmebl Homo_sapiens.GRCh38 for alignment, then the precomputed data object ‘bi_do’ can be used for analyses.
+1.	**Protein pairs**: All the protein pair combinations are created and both confidence scores (KS and DS) are calculated for them. If you have used the Ensmebl Homo_sapiens.GRCh38 for alignment, then the precomputed data object *‘bi_do’* can be used for analyses.
 
 ```perl /path/to/script/cal_pp_conf.pl --rel /path/to/file/Biomart_rel.txt --bi_do /path/to/data_object/bi_do.data --ss /path/to/ss/scoring_scheme.txt --out_path /path/to/outfile/ --pp_do prot_pairs.data```
 
