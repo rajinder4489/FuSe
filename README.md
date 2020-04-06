@@ -3,11 +3,13 @@
 
 After cloning the repository, first run the following commands
 
-On Linux machine &nbsp;&nbsp;
-```cat bi_do.part0\* > ~/bi_do.rar```&nbsp;&nbsp;
+On Linux<br/>
+```cat bi_do.part0\* > ~/bi_do.rar```<br/>
 ```unrar e bi_do.ra```
 
-On Windows, unrar using Winrar. Click on any .rar file  (bi_do.part0*) and click extract here
+On Windows<br/>
+*unrar using Winrar*<br/>
+Click on any *.rar file* (bi_do.part0*) and then click extract here
 
 
 0.	**Environment setup**: FuSe requires Perl (v5.26.1 or higher) and certain Perl modules. When using FuSe for the first time, install the Perl modules by running the following command from command prompt.
