@@ -3,9 +3,9 @@
 
 After cloning the repository, first run the following commands
 
-On Linux machine, 
-```cat bi_do.part0\* > ~/bi_do.rar```
- ```unrar e bi_do.ra```
+On Linux machine &nbsp;&nbsp;
+```cat bi_do.part0\* > ~/bi_do.rar```&nbsp;&nbsp;
+```unrar e bi_do.ra```
 
 On Windows, unrar using Winrar. Click on any .rar file  (bi_do.part0*) and click extract here
 
