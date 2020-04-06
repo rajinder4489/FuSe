@@ -44,7 +44,7 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 
 ```-outfmt "7 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen"```
 
-The results from Interpro were obtained in tsv format using the default values. To use in future available updates to Ensembl, the data should be generated as explained in this step.
+The results from Interpro were obtained in *.tsv format* using the default values. To use in future available updates to Ensembl, the data should be generated as explained in this step.
 
 
 
