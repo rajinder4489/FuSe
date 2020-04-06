@@ -48,6 +48,6 @@ The results from Interpro were obtained in *.tsv format* using the default value
 
 
 
-5.	**Preprocessing**: The data generated from BLAST+ and Interpro were put together to create the bi_do.
+5.	**Preprocessing**: The data generated from BLAST+ and Interpro were put together to create the **bi_do**.
 
 ```perl /path/to/script/preprocessing_data.pl --interpro path/to/file/interpro.tsv --blast /path/to/file/blast.txt --out_path /path/to/outfile/ --bi_do bi_do.txt```
