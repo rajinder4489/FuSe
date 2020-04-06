@@ -26,7 +26,7 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 
 2.	**SFPGs**: The overlapping protein pairs which are over the given CSC are used to create SFPGs. The SFPG confidence is calculated by averaging the protein pair scores. One SFPG is formed for each protein coding transcript that has other similar protein coding transcripts.
 
-```perl /path/to/script/make_sfpgs.pl --pp_do /path/to/file/prot_pairs.data --score_type KS --csc 95 --out_path /path/to/outfile/ --name sfpg sfpg.data```
+```perl /path/to/script/make_sfpgs.pl --pp_do /path/to/file/prot_pairs.data --score_type KS --csc 95 --out_path /path/to/outfile/ --sfpg sfpg.data```
 
 
 
