@@ -4,7 +4,7 @@
 After cloning the repository, first run the following command
 
 On Linux<br/>
-```cat bi_do.part0\* > ~/bi_do.rar```<br/>
+```cat bi_do.part0* > ~/bi_do.rar```<br/>
 ```unrar e bi_do.ra```
 
 On Windows<br/>
