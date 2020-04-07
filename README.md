@@ -1,7 +1,7 @@
 <h1>FuSe</h1>
 <h2>Functional grouping of transcripts for RNA-Seq analyses</h2>
 
-After cloning the repository, first run the following commands
+After cloning the repository, first run the following command
 
 On Linux<br/>
 ```cat bi_do.part0\* > ~/bi_do.rar```<br/>
