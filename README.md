@@ -21,7 +21,6 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 
 
 1.	**Protein pairs**: All the protein pair combinations are created and both confidence scores (KS and DS) are calculated for them. If you have used the Ensmebl Homo_sapiens.GRCh38 for alignment, then the precomputed data object **bi_do** can be used for analyses.
-
 <br/>Usage:<br/>
 ```perl /path/to/script/cal_pp.pl --help```<br/>
 ```perl /path/to/script/cal_pp_conf.pl --rel /path/to/file/Biomart_rel.txt --bi_do /path/to/data_object/bi_do.data --ss /path/to/ss/scoring_scheme.txt --out_path /path/to/outfile/ --pp_do prot_pairs.data```
