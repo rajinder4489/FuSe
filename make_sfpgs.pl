@@ -89,10 +89,10 @@ else
 	$out_file1 =~ s/.data/.txt/;
 }
 
-print "\nRunning with\n\tProtien pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreating\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
+print "\nRunning with\n\tProtein pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreating\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
 ##############
 
-print "Loading the Protien pair data\n";
+print "Loading the Protein pair data\n";
 my %pairs = %{ retrieve("$pp_do") };   # direct to hash
 print "\tDone\n";
 
@@ -150,4 +150,4 @@ foreach my $k (keys %groups)
 print "\tDone\n\nSaving the data structure\n";
 store \%g_formed, $out_path."/".$out_file2 or die;
 
-print "\tDone\n\nRan with\n\tProtien pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreated\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
+print "\tDone\n\nRan with\n\tProtein pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreated\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
