@@ -1,6 +1,6 @@
 #Rajinder Gupta
 #This program finds the confidence of protein pairs
-#It only keeps the cases where both the proteins in the pair are protien coding
+#It only keeps the cases where both the proteins in the pair are protein coding
 
 use strict;
 use warnings;
@@ -59,7 +59,7 @@ sub usage {
 }
 
 ###########################Passing flags END##################
-print "\nRunning with\n\tBiomart relation file-> $rel_file\n\tBLAST Interpro do-> $bi_do\n\tScoring scheme-> $ss\nCreating\n\tData object-> $pp_do\nAt\n\t$out_path\n\n";
+print "\nInput\n\tBiomart relation file-> $rel_file\n\tBLAST Interpro do-> $bi_do\n\tScoring scheme-> $ss\nOutput\n\tData object-> $pp_do\nAt\n\t$out_path\n\n";
 
 ###########
 
@@ -182,4 +182,4 @@ print "\tCalculated for $zz\nDone\n\n";
 print "Saving the data object $pp_do\n";
 store \%pairs, join '/', $out_path, $pp_do or die;
 
-print "\tDone\nRan with\n\tBiomart relation file-> $rel_file\n\tBLAST Interpro do-> $bi_do\n\tScoring scheme-> $ss\nCreated\n\tData object-> $pp_do\nAt\n\t$out_path\n\n";
+print "\tDone\nFinished\n";

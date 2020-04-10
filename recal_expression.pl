@@ -61,7 +61,7 @@ sub usage {
 
 my $extra_recal_file = "extra_".$recal_file;
 
-print "\nRunning with\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\nCreating\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
+print "\nInput\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\nOutput\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
 ##############
 
 open(my $reads, $ori_file) or die "Could not open file $ori_file $!";
@@ -89,7 +89,7 @@ while(<$reads>)
 
 print "Loading SFPG data\n";
 my %groups = %{ retrieve("$sfpg") };   # direct to hash
-print "\tDone\n";
+print "\tDone\nCalculating SFPG expression\t";
 
 open(my $fh1, '>', $out_path."/".$recal_file) or die "Could not open file '$recal_file' $!";
 
@@ -167,4 +167,4 @@ foreach my $keys (keys %reads)
 close $fh1;
 close $fh2;
 
-print "Ran with\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\nCreated\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
+print "Done\nFinished\n";

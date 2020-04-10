@@ -89,7 +89,7 @@ else
 	$out_file1 =~ s/.data/.txt/;
 }
 
-print "\nRunning with\n\tProtein pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreating\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
+print "\nInput\n\tProtein pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nOutput\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
 ##############
 
 print "Loading the Protein pair data\n";
@@ -147,7 +147,7 @@ foreach my $k (keys %groups)
 	print $out_fh1 "$score_type\t$k\t$c\t$str\t$av\n";
 }
 
-print "\tDone\n\nSaving the data structure\n";
+print "\tDone\n\nSaving the data object\n";
 store \%g_formed, $out_path."/".$out_file2 or die;
 
-print "\tDone\n\nRan with\n\tProtein pairs-> $pp_do\n\tSimilarity score cutoff-> $conf\nCreated\n\tSFPGs-> $out_file2\n\t        $out_file1\nAt\n\t$out_path\n\n";
+print "\tDone\nFinished\n";

@@ -72,7 +72,7 @@ else
 	$bi_do = $bi_do.".data";
 }
 
-print "Running with\n\tInterpro-> $interpro_file\n\tBlast-> $blast_file\nCreating\n\tData str object-> $bi_do\nAt\n\t$out_path\n\n";
+print "Input\n\tInterpro-> $interpro_file\n\tBlast-> $blast_file\nOutput\n\tData object-> $bi_do\nAt\n\t$out_path\n\n";
 
 ##############
 
@@ -280,7 +280,7 @@ sub make_res
 	}
 }
 
-print "\tDone\nSaving the data structure\n";
+print "\tDone\nSaving the data object\n";
 store \%res, join '/', $out_path, $bi_do or die;
 
-print "\tDone\n\nRan with\n\tInterpro-> $interpro_file\n\tBlast-> $blast_file\nCreated\n\tBI_do-> $bi_do\nAt\n\t$out_path\n\n";
+print "\tDone\nFinished\n";
