@@ -12,7 +12,7 @@ use warnings;
 #use Data::Dumper;		#for developmental only
 use List::MoreUtils qw(uniq);
 use Array::Utils qw(:all);
-#use File::Find::Rule;
+#use File::Find::Rule;	#for development only
 use Storable qw(store);
 use Getopt::Long;
 use Cwd;
@@ -102,7 +102,7 @@ while(<$interpro>)
 		$hash{$arr[0]}{$arr[3]} = [$arr[6].'-'.$arr[7].'_'.$arr[4]];
 	}
 }
-print "\tDone reading\nProcessing Interpro data\t";
+print "\tDone reading\nProcessing Interpro data\n";
 my (%ip1, %ip2, %ip3);			#ip = interpro
 
 foreach my $k1(keys %hash)
@@ -125,13 +125,16 @@ foreach my $k1(keys %hash)
 		$ip3{$k1}{$k2} = [$str2];			#to compare when the number of patterns and profiles change but the types remain constant
 	}
 }
-print "\tDone\nNow reading BLAST file and concurrently finding similar seqs\n";
+print "\tDone\nNow reading BLAST file and finding similar transcripts\n";
 
+
+###For testing with multi file BLAST input
 #my $path_blast = "/ngs-data/analysis/eutoxrisk/isozymes_isoforms/all_protein_transcripts_blast/";
 #my @f_blast = File::Find::Rule->file()
 #					->name( '*align*' )			##Give the text to match for the file name here
 #					->in( $path_blast );
 #
+###
 
 my %processed;
 my @ip_tools = ('CDD', 'Coils', 'Gene3D', 'Hamap', 'MobiDBLite', 'Pfam', 'PIRSF', 'PRINTS', 'ProSitePatterns', 'ProSiteProfiles', 'SFLD', 'SMART', 'SUPERFAMILY', 'TIGRFAM');
@@ -150,7 +153,6 @@ my %res;
 			chomp;
 			my $s = $_;
 			my @arr = split /\t/, $s;
-#			$string =~ s/\r|\n//g;
 			
 			my $string = $arr[2].' '.(($arr[3]/$arr[12])*100).' '.(($arr[3]/$arr[13])*100).' '.(($arr[5]/$arr[3])*100);		#To find the subject or query coverage, alignment length is divided by them but in case of gaps, gaps are divided by alignment length to find the percent of alignment length which has gaps
 
@@ -169,6 +171,13 @@ my %res;
 	}
 #}
 
+print "\tDone\nSaving the data object\n";
+store \%res, join '/', $out_path, $bi_do or die;
+
+print "\tDone\nFinished\n";
+
+
+#Functions
 #to compare for exact matches
 sub ip_match1
 {
@@ -279,8 +288,3 @@ sub make_res
 		$res{$k} = [@str];
 	}
 }
-
-print "\tDone\nSaving the data object\n";
-store \%res, join '/', $out_path, $bi_do or die;
-
-print "\tDone\nFinished\n";

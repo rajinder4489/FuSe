@@ -64,6 +64,7 @@ my $extra_recal_file = "extra_".$recal_file;
 print "\nInput\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\nOutput\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
 ##############
 
+print "Reading the expression file\n";
 open(my $reads, $ori_file) or die "Could not open file $ori_file $!";
 
 my ($header, %reads);
@@ -87,9 +88,9 @@ while(<$reads>)
 }
 
 
-print "Loading SFPG data\n";
+print "\tDone\nLoading SFPG data\n";
 my %groups = %{ retrieve("$sfpg") };   # direct to hash
-print "\tDone\nCalculating SFPG expression\t";
+print "\tDone\nCalculating SFPG expression\n";
 
 open(my $fh1, '>', $out_path."/".$recal_file) or die "Could not open file '$recal_file' $!";
 
@@ -117,13 +118,13 @@ foreach my $k (sort {lc $a cmp lc $b} keys %groups)
 			{
 				my $no_groups = @{$groups{$m}}[1];	#required to calculate the division of reads between the groups
 					
-				my @mem = split /,/, @{$groups{$m}}[2];	#finding the number of memebers in each group
+				my @mem = split /,/, @{$groups{$m}}[2];	#finding the number of members in each group
 				s{\s|\t|\r}{}g foreach @mem;
 				
 				my $all_num_mem = 0;			#it provides the total number of members for all the groups in which the current transcript id is present
 				foreach my $mm (@mem)
 				{
-					$all_num_mem += @{$groups{$m}}[1];
+					$all_num_mem += @{$groups{$mm}}[1];
 				}
 				
 				my @arr = @{$reads{$m}};
@@ -167,4 +168,4 @@ foreach my $keys (keys %reads)
 close $fh1;
 close $fh2;
 
-print "Done\nFinished\n";
+print "\tDone\nFinished\n";
