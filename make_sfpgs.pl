@@ -53,7 +53,7 @@ sub usage {
 	                	
 	score_type|t    The type of score to use for calculation of FPKM for SFPGs
 	                Options KS | DS
-	                Both upper and lower case allowed (kS | Ks | ks | dS | Ds | ds)
+	                Both upper and lower case allowed (KS | kS | Ks | ks | DS | dS | Ds | ds)
 					Default 'KS'
 	
 	conf|c          Confidence score cutoff, to take only the protein pairs above it for forming SFPGs
