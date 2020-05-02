@@ -1,4 +1,3 @@
-#Rajinder Gupta
 #Recalculates the expresion using the SFPG data and the RNA-Seq expression data of transcripts
 
 use strict;
@@ -11,13 +10,15 @@ use Cwd;
 
 ################Flags START######################
 
-my ($ori_file, $sfpg, $out_path, $recal_file, $help);
+my ($ori_file, $recal_type, $sfpg, $out_path, $recal_file, $help);
 
+$recal_type = 2;
 $recal_file = "recal_exp.txt";
 $out_path = getcwd;
 
 GetOptions(
 	'input|in=s' => \$ori_file,
+	'type|t=i' => \$recal_type,
 	'sfpg|g=s' => \$sfpg,
 	'out_path|o=s' => \$out_path,
 	'recal|re=s' => \$recal_file,
@@ -27,21 +28,30 @@ GetOptions(
 if($help){usage();}
 else
 {
-	if (not defined $ori_file)
+	if($recal_type > 2 || $recal_type <= 0)
+	{print STDERR "Error Argument '--type' or '-t' should be 1 or 2\n";
+		usage();}
+	elsif (not defined $ori_file)
 	{print STDERR "Error Argument '--input' or '-in' is mandatory\n";
 		usage();}
 	elsif (not defined $sfpg)
 	{print STDERR "Error Argument '--sfpg' or '-g' is mandatory\n";
 		usage();}
 }
+
 sub usage {
     $0 =~ s/.+\///g;
-	print "\nUsage: $0 --input <filename> --sfpg <filename> [--out_path <out path>] [--recal <filename>]\n";
-    print "Usage: $0 -in <filename> -g <filename> [-o <out path>] [-re <filename>]\n";
+	print "\nUsage: $0 --input <filename> --sfpg <filename> [--type <1|2>] [--out_path <out path>] [--recal <filename>]\n";
+    print "Usage: $0 -in <filename> -g <filename> [-t <1|2>] [-o <out path>] [-re <filename>]\n";
     print "       $0 --help\n";
     print "       $0 -h\n";
 	print "
 	input|in        Path and filename to the original FPKM file
+	
+	type|t          Type of recalcualtion
+	                Equal distributioin (ED) or Number of members distribution (NMD)
+	                Options 1 for ED or 2 for NMD
+	                Default 1
 	
 	sfpg|g          Path and filename to the SFPG data object created using make_sfpgs.pl
 	                Default location and name: 'current_folder/int_bla_FuSe_do.data'
@@ -61,7 +71,7 @@ sub usage {
 
 my $extra_recal_file = "extra_".$recal_file;
 
-print "\nInput\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\nOutput\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
+print "\nInput\n\tFPKM-> $ori_file\n\tSFPG-> $sfpg\n\tType-> $recal_type\nOutput\n\tRecal SFPGs FPKM-> $recal_file\n\tExtra Recal SFPGs FPKM-> $extra_recal_file\nAt\n\t$out_path\n\n";
 ##############
 
 print "Reading the expression file\n";
@@ -106,6 +116,7 @@ foreach my $k (sort {lc $a cmp lc $b} keys %groups)
 	if(exists $reads{$k})
 	{
 		my @members = split /,/, @{$groups{$k}}[2];
+		my $no_mem_main_group = @{$groups{$k}}[1];
 		
 		my @len = @{$reads{$k}};
 		my $no_samples = scalar @len;
@@ -114,26 +125,42 @@ foreach my $k (sort {lc $a cmp lc $b} keys %groups)
 		foreach my $m (@members)
 		{
 			$m =~ s/\s//g;
+			my $no_groups = @{$groups{$m}}[1];	#number of members in the group of a member; required to calculate the division of reads between the groups;
+					
 			if(exists $reads{$m})
 			{
-				my $no_groups = @{$groups{$m}}[1];	#required to calculate the division of reads between the groups
-					
-				my @mem = split /,/, @{$groups{$m}}[2];	#finding the number of members in each group
-				s{\s|\t|\r}{}g foreach @mem;
-				
-				my $all_num_mem = 0;			#it provides the total number of members for all the groups in which the current transcript id is present
-				foreach my $mm (@mem)
-				{
-					$all_num_mem += @{$groups{$mm}}[1];
-				}
-				
 				my @arr = @{$reads{$m}};
 				
-				foreach my $x (@arr) { $x = ($x/$all_num_mem)*$no_groups; }
+				if($recal_type == 1)		#equal distribution
+				{
+					foreach my $x (@arr) { $x = ($x/$no_groups); }
+				}
+				elsif($recal_type == 2)		#Number of members distribution
+				{
+					
+					my @mem = split /,/, @{$groups{$m}}[2];	#members in group of a member
+					s{\s|\t|\r}{}g foreach @mem;
+					
+					my $all_num_mem = 0;			#it provides the total number of members for all the groups in which the current transcript id is present
+					
+					foreach my $mm (@mem)
+					{
+						$all_num_mem += @{$groups{$mm}}[1];
+					}
+					
+					foreach my $x (@arr) { $x = ($x/$all_num_mem)*$no_mem_main_group; }
+						
+				}
+				else
+				{
+					print "Wrong recal type\n$recal_type\n";
+				}
+					
 				@sum = pairwise { $a + $b } @sum, @arr;
 			}
 		}
 		$reads_new{$k} = [@sum];
+#		die;
 	}
 }
 

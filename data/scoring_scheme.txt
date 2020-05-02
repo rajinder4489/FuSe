@@ -1,6 +1,6 @@
 #Scoring scheme 1 for finding the confidence of protein pairs; optimal
 
->BLAST	=>	30	-5	-1	"(identity, coverage, gaps)"
+>BLAST	=>	30	-5	-10	"(identity, coverage, gaps)"
 
 Tool	STONM	STNM	STM	NM	NP
 >CDD	5	2.5	1	-2.5	0.5

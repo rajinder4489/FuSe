@@ -1,4 +1,3 @@
-#Rajinder Gupta
 #makes the SFPG based on csc and protein pair data object 
 
 use strict;
@@ -44,8 +43,8 @@ else
 
 sub usage {
     $0 =~ s/.+\///g;
-	print "\nUsage: $0 --pp_do <filename> --score_type [<KS|DS>] [--conf <integer>] [--out_path <out path>] [--sfpg <filename>]\n";
-    print "Usage: $0 -p <filename> -t <KS|DS> [-c <integer>] [-o <out path>] [-g <filename>]\n";
+	print "\nUsage: $0 --pp_do <filename> [--score_type <KS|DS>] [--conf <integer>] [--out_path <out path>] [--sfpg <filename>]\n";
+    print "Usage: $0 -p <filename> [-t <KS|DS>] [-c <integer>] [-o <out path>] [-g <filename>]\n";
     print "       $0 --help\n";
     print "       $0 -h\n";
 	print "

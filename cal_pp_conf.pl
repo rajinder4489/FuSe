@@ -1,41 +1,76 @@
-#Rajinder Gupta
 #This program finds the confidence of protein pairs
-#It only keeps the cases where both the proteins in the pair are protein coding
+#It only keeps the cases where both the proteins in the pair are protein coding or as defined by the user.
 
 use strict;
 use warnings;
-use Data::Dumper;
-#use Array::Utils qw(:all);
 use Storable;
 use List::Util qw(sum0);
 use Getopt::Long;
 use Cwd;
+use JSON::XS qw(encode_json decode_json);
+use File::Slurp qw(read_file write_file);
+
+#use Data::Dumper;	#For development only
+#use Array::Utils qw(:all);
 
 ################Passing flags START######################
 
-my ($rel_file, $bi_do, $ss, $out_path, $pp_do, $help);
+my ($rel_file, $bi_do, $ss, $out_path, $pp_do, $bt, $help, %biotypes, %bt_use);
 
 $rel_file = "data/Biomart_rel.txt";
-$bi_do = "data/bi_do.data";
+$bi_do = "data/bi_do.json";
 $ss = "data/scoring_scheme.txt";
 $pp_do = "pp_FuSe.data";
 $out_path = getcwd;
+$bt = "1";
+
+%biotypes = (
+    1	=>	"protein_coding",
+	2	=>	"nonsense_mediated_decay",
+	3	=>	"polymorphic_pseudogene",
+	4	=>	"non_stop_decay",
+	5	=>	"IG_C_gene",
+	6	=>	"IG_D_gene",
+	7	=>	"IG_J_gene",
+	8	=>	"IG_V_gene",
+	9	=>	"TR_C_gene",
+	10	=>	"TR_D_gene",
+	11	=>	"TR_J_gene",
+	12	=>	"TR_V_gene",
+);
+
 
 GetOptions(
 	'rel|r=s' => \$rel_file,
 	'bi_do|bi=s' => \$bi_do,
 	'ss|s=s' => \$ss,
+	'bt|b=s' => \$bt,
 	'pp_do|p=s' => \$pp_do,
 	'out_path|o=s' => \$out_path,
 	'help|h' => \$help,
 ) or die usage();
 
 if($help){usage();}
+else
+{
+	my @given_bt = split ",", $bt;
+	s{^\s+|\s+$}{}g foreach @given_bt;
+	
+	foreach(@given_bt)
+	{
+		if ($_ > 12 || $_ < 1)
+		{print STDERR "Error Argument '--bt' or '-b' should lie in range 1 to 12\nArgument: $_ is not allowed\n";
+			usage();}
+		
+		my $type = $biotypes{$_};
+		$bt_use{$type} = undef;
+	}
+}
 
 sub usage {
     $0 =~ s/.+\///g;
-	print "\nUsage: $0 [--rel <filename>] [--bi_do <filename>] [--ss <filename>] [--out_path <out path>] [--pp_do <filename>]\n";
-    print "Usage: $0 [-r <filename>] [-bi <filename>] [-s <filename>] [-o <out path>] [-p <filename>]\n";
+	print "\nUsage: $0 [--rel <filename>] [--bi_do <filename>] [--bt 1,2,3,4] [--ss <filename>] [--out_path <out path>] [--pp_do <filename>]\n";
+    print "Usage: $0 [-r <filename>] [-bi <filename>] [-b 1,2,3,4] [-s <filename>] [-o <out path>] [-p <filename>]\n";
     print "       $0 --help\n";
     print "       $0 -h\n";
 	print "
@@ -48,7 +83,23 @@ sub usage {
 	ss|s            Path and filename to the scoring scheme file
 	                Default location and name: 'data/scoring_scheme.txt'
 	
-	pp_do|o         Filename for the data object to be created using this program
+	bt|b            Biotype of the protein coding transcripts to be used.
+	                Default 1, alphanumerics if entered will be treated as integers
+					
+	                protein_coding             1
+	                nonsense_mediated_decay    2
+	                polymorphic_pseudogene     3
+	                non_stop_decay             4
+	                IG_C_gene                  5
+	                IG_D_gene                  6
+	                IG_J_gene                  7
+	                IG_V_gene                  8
+	                TR_C_gene                  9
+	                TR_D_gene                  10
+	                TR_J_gene                  11
+	                TR_V_gene                  12
+
+	pp_do|p         Filename for the data object to be created using this program
 	                Default name 'pp_FuSe.data'
 	
 	out_path|o      Out path for the pp_FuSe.data
@@ -79,7 +130,12 @@ while(<$rel>)
 }
 
 print "Reading BLAST-Interpro data object\n";
-my %hash = %{ retrieve($bi_do) };   # direct to hash		#gets the data object saved from the last script
+
+#gets the data object saved from the last script
+{
+    my $json = read_file($bi_do, { binmode => ':raw' });
+    %hash = %{ decode_json $json };
+}
 
 print "\tDone\n\n\n";
 
@@ -172,9 +228,13 @@ foreach my $k (keys %hash)
 		$yy = $zz;
 	}
 	
-	if($pty{$p[0]} eq 'protein_coding' && $pty{$p[1]} eq 'protein_coding')	#removes all other type of sequences
+#	if($pty{$p[0]} eq 'protein_coding' && $pty{$p[1]} eq 'protein_coding')	#removes all other type of sequences
+	if(exists $bt_use{$pty{$p[0]}})		#check if constitutes one of the biotypes allowwed
 	{
-		$pairs{$k} = [$t1, $t2, $score1, $score2, $score3, @arr1];	
+		if(exists $bt_use{$pty{$p[1]}})
+		{
+			$pairs{$k} = [$t1, $t2, $score1, $score2, $score3, @arr1];	
+		}
 	}
 }
 print "\tCalculated for $zz\nDone\n\n";
