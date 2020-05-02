@@ -49,9 +49,9 @@ sub usage {
 	input|in        Path and filename to the original FPKM file
 	
 	type|t          Type of recalcualtion
-	                Equal distributioin (ED) or Number of members distribution (NMD)
-	                Options 1 for ED or 2 for NMD
-	                Default 1
+	                Equal distributioin (ED) or Group size distribution (GD)
+	                Options 1 for ED or 2 for GD
+	                Default 2
 	
 	sfpg|g          Path and filename to the SFPG data object created using make_sfpgs.pl
 	                Default location and name: 'current_folder/int_bla_FuSe_do.data'
