@@ -14,10 +14,10 @@ Click on any *.rar file* (bi_do.part0*) and then click extract here
 
 0.	**Environment setup**: FuSe requires Perl (v5.26.1 or higher) and certain Perl modules. When using FuSe for the first time, install the Perl modules by running the following command from command prompt.
 
-```cpan File::Find::Rule Storable List::Util List::MoreUtils Array::Utils Data::Dumper Getopt::Long```
+```cpan File::Find::Rule Storable List::Util List::MoreUtils Array::Utils Data::Dumper Getopt::Long JSON::XS File::Slurp```
 
-Another prerequisite for FuSe is a **relationship file** for Ensembl gene, transcript and protein ids; which can be obtained from Biomart; refer *FuSe/data/sample_biomart.txt*.
-
+Another prerequisite for FuSe is a **relationship file** for Ensembl gene, transcript and protein ids; which can be obtained from Biomart; refer *FuSe/data/sample_biomart.txt*.</br>
+Note: Make sure that the Biomart relationship file is the same version as used for genome alignment.
 
 
 <h3>Using precomputed BLAST Interpro data object (bi_do)</h3>
@@ -41,7 +41,7 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 3.	**SFPGs expression**: Using the FPKM values for the samples and SFPG data, expression is calculated for all SFPGs.
 <br/>Usage:<br/>
 ```perl /path/to/script/recal_expression.pl --help```<br/>
-```perl /path/to/script/recal_expression.pl --input /path/to/file/exp_file.txt --sfpg /path/to/file/sfpg.data --out_path /path/to/outfile/ --recal recal_exp.txt```
+```perl /path/to/script/recal_expression.pl --input /path/to/file/exp_file.txt --type 2 --sfpg /path/to/file/sfpg.data --out_path /path/to/outfile/ --recal recal_exp.txt```
 
 
 
@@ -50,7 +50,6 @@ Another prerequisite for FuSe is a **relationship file** for Ensembl gene, trans
 
 
 4.	**Data preparation**: Sequence alignment, protein domain, motifs and family information are required to make the bi_do. Protein sequences can be obtained from Ensembl. BLAST+ and Interpro were run as explained in their user manuals. For BLAST+, first a protein reference database was created using all sequences and then aligned to all sequences. The alignment results were then obtained in out format 7.
-
 ```-outfmt "7 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qlen slen"```
 
 The results from Interpro were obtained in *.tsv format* using the default values. To use in future available updates to Ensembl, the data should be generated as explained in this step.
