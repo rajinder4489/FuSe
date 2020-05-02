@@ -38,7 +38,8 @@ Note: Make sure that the Biomart relationship file is the same version as used f
 
 
 
-3.	**SFPGs expression**: Using the FPKM values for the samples and SFPG data, expression is calculated for all SFPGs.
+3.	**SFPGs expression**: Using the normalized FPKM for the samples and SFPG data, expression is calculated for all SFPGs.  The SFPG expression can be calculate using one of the distribution:  Equal distributioin (ED) or Group size distribution (GD)
+For computing normalized FPKM refer extra/norm_fpkm.r
 <br/>Usage:<br/>
 ```perl /path/to/script/recal_expression.pl --help```<br/>
 ```perl /path/to/script/recal_expression.pl --input /path/to/file/exp_file.txt --type 2 --sfpg /path/to/file/sfpg.data --out_path /path/to/outfile/ --recal recal_exp.txt```
